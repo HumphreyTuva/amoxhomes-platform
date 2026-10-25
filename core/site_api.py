@@ -12,6 +12,7 @@ from django.db.models import Avg, Count, F, Q
 from django.http import Http404, JsonResponse
 from django.template.defaultfilters import date as fmt_date
 from django.urls import path
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET, require_POST
 
 from .forms import SERVICES, ContactForm, InquiryForm, ListingForm, ProviderForm
@@ -316,7 +317,7 @@ def post_review(request):
     return JsonResponse({"ok": False, "error": True}, status=400)
 
 urlpatterns = [
-    path("boot/", _json(boot_data)),
+    path("boot/", ensure_csrf_cookie(_json(boot_data))),   # sets the CSRF cookie when the page is not served by Django (e.g. Netlify)
     path("home/", _json(home_data)),
     path("houses/", _json(houses_data)),
     path("houses/near/<slug:institution>/", _json(houses_data)),
