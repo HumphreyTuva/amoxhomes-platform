@@ -4,13 +4,24 @@ const readJson = (id) => {
   try { return JSON.parse(document.getElementById(id)?.textContent || 'null'); } catch { return null; }
 };
 
+// Images that ship with the frontend (frontend/public/img). They load from the same host as the page
+// (Netlify's CDN, or Django's /static/app/), so they never wait for the API or for PythonAnywhere.
+const IMG = {
+  hero_desktop: 'hero-desktop.webp', hero_mobile: 'hero-mobile.webp', logo: 'logo-sm.png', menu_house: 'menu-house.webp',
+  internet: 'services/internet.webp', gas: 'services/gas.webp', items: 'services/items.webp', moving: 'services/moving.webp', other: 'services/other.webp',
+};
+const withLocalImages = (b) => {
+  if (b) b.assets = { ...b.assets, ...Object.fromEntries(Object.entries(IMG).map(([k, f]) => [k, `${import.meta.env.BASE_URL}img/${f}`])) };
+  return b;
+};
+
 // Django puts site settings and the current page's data into the HTML, so the first paint needs no API call.
-let boot = readJson('amox-boot');
+let boot = withLocalImages(readJson('amox-boot'));
 let preload = readJson('amox-preload') || {};
 
 export const getBoot = () => boot;
 export async function loadBoot() {            // only used by `npm run dev`, where Django does not render index.html
-  if (!boot) boot = await (await fetch('/api/site/boot/')).json();
+  if (!boot) boot = withLocalImages(await (await fetch('/api/site/boot/')).json());
   return boot;
 }
 export const expirePreload = () => { preload = {}; };   // after the first client-side navigation, always ask the server

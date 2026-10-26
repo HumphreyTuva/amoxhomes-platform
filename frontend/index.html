@@ -8,6 +8,14 @@
 <link rel="icon" href="/static/core/logo-sm.png">
 <!--AMOX_HEAD-->
 <script>document.documentElement.classList.add('js')</script>
+<script>
+if (location.pathname === '/') {
+  var l = document.createElement('link');
+  l.rel = 'preload'; l.as = 'image'; l.setAttribute('fetchpriority', 'high');
+  l.href = '%BASE_URL%img/' + (matchMedia('(min-width:768px)').matches ? 'hero-desktop.webp' : 'hero-mobile.webp');
+  document.head.appendChild(l);
+}
+</script>
 </head>
 <body class="text-slate-800 antialiased">
 <div id="root"></div>

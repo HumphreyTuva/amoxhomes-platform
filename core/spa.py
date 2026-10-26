@@ -48,7 +48,6 @@ def _page(request):
     host = f"{request.scheme}://{request.get_host()}"
     try:
         if name == "home":
-            meta["preload_hero"] = True
             pre[_key("/home/", {})] = api.home_data(request)
         elif name in ("houses", "houses_near"):
             inst = kw.get("institution")

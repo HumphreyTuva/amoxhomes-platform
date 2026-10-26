@@ -12,8 +12,7 @@ export default function Home() {
   const { data } = useApi('/api/site/home/');
   const [s, setS] = useState(b.institutions[0]?.slug || '');
   useMeta('AMOXHomes | Houses & Settlement Support in Malindi');
-  if (!data) return <Loading />;
-  const { featured, reviews, posts, ticker, ticker_secs: secs, services } = data;
+  const { featured = [], reviews = [], posts = [], ticker = [], ticker_secs: secs = 20, services = [] } = data || {};
 
   return (
     <>
@@ -49,6 +48,8 @@ export default function Home() {
         </div>
       )}
 
+      {!data ? <Loading /> : (
+        <>
       {ticker.length > 0 && (
         <div className="mt-12 bg-mist py-3 overflow-hidden text-navy font-semibold" role="region" aria-label="Announcements">
           <div className="marquee whitespace-nowrap" style={{ animationDuration: `${secs}s` }}>
@@ -74,7 +75,7 @@ export default function Home() {
         <div className="grid gap-4 md:grid-cols-3 mt-6">
           {services.map((x, i) => (
             <Reveal as={Link} key={x.key} to={`/request/${x.key}/`} d={i} className="lift zoom flex items-center gap-4 bg-white border rounded-2xl p-4">
-              <span className="block shrink-0 overflow-hidden rounded-xl"><img src={x.img} alt="" width="144" height="112" loading="lazy" className="h-24 w-28 sm:h-28 sm:w-36 object-cover" /></span>
+              <span className="block shrink-0 overflow-hidden rounded-xl"><img src={x.key === 'house' ? b.assets.menu_house : b.assets[x.key]} alt="" width="144" height="112" loading="lazy" className="h-24 w-28 sm:h-28 sm:w-36 object-cover" /></span>
               <span><h3 className="font-bold text-navy leading-snug">{x.title}</h3><p className="text-sm text-slate-600 mt-1">{x.text}</p></span>
             </Reveal>
           ))}
@@ -129,6 +130,8 @@ export default function Home() {
           <Link to="/landlords/list/" className="inline-block mt-4 md:mt-0 shrink-0 bg-coral text-slate-900 font-semibold rounded-full px-5 py-2">List Your Property</Link>
         </Reveal>
       </section>
+        </>
+      )}
     </>
   );
 }
