@@ -16,10 +16,13 @@ else:
     DEBUG = os.path.basename(sys.argv[0]) == "manage.py"
 
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-only-change-me" if DEBUG else "")
-ALLOWED_HOSTS = [h for h in os.getenv("ALLOWED_HOSTS", "*" if DEBUG else "").split(",") if h]
+ALLOWED_HOSTS = [h for h in os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1" if DEBUG else "").split(",") if h]
 if not DEBUG and not (SECRET_KEY and ALLOWED_HOSTS):
     raise ImproperlyConfigured("Set SECRET_KEY and ALLOWED_HOSTS environment variables.")
-CSRF_TRUSTED_ORIGINS = [o for o in os.getenv("CSRF_TRUSTED_ORIGINS", "http://localhost:5173").split(",") if o]
+CSRF_TRUSTED_ORIGINS = [o for o in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",") if o]
+if DEBUG:
+    # the Vite dev server (npm run dev) posts forms from these addresses
+    CSRF_TRUSTED_ORIGINS += ["http://localhost:5173", "http://127.0.0.1:5173"]
 
 INSTALLED_APPS = [
     "django.contrib.admin", "django.contrib.auth", "django.contrib.contenttypes",
