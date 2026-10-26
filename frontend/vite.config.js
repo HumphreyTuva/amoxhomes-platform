@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 const onNetlify = !!process.env.NETLIFY;                 // Netlify sets this automatically during its build
-const API = 'https://be8tech.pythonanywhere.com';         // where /api, /media etc. are forwarded in dev
+const API = 'https://amoxhomes.pythonanywhere.com';         // where /api, /media etc. are forwarded in dev
 
 // Build on your PC:  files go to ../core/static/app and are served by Django under /static/app/.
 // Build on Netlify:  files go to ./dist with base "/".

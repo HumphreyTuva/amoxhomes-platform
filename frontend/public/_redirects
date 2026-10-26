@@ -1,8 +1,8 @@
-/admin          https://be8tech.pythonanywhere.com/admin/            200
-/admin/*        https://be8tech.pythonanywhere.com/admin/:splat      200
-/console        https://be8tech.pythonanywhere.com/console/          200
-/console/*      https://be8tech.pythonanywhere.com/console/:splat    200
-/api/*          https://be8tech.pythonanywhere.com/api/:splat        200
-/media/*        https://be8tech.pythonanywhere.com/media/:splat      200
-/static/*       https://be8tech.pythonanywhere.com/static/:splat     200
-/*              /index.html                                          200
+/admin          https://amoxhomes.pythonanywhere.com/admin/            200
+/admin/*        https://amoxhomes.pythonanywhere.com/admin/:splat      200
+/console        https://amoxhomes.pythonanywhere.com/console/          200
+/console/*      https://amoxhomes.pythonanywhere.com/console/:splat    200
+/api/*          https://amoxhomes.pythonanywhere.com/api/:splat        200
+/media/*        https://amoxhomes.pythonanywhere.com/media/:splat      200
+/static/*       https://amoxhomes.pythonanywhere.com/static/:splat     200
+/*              /index.html                                            200
